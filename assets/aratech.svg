@@ -1,0 +1,181 @@
+<svg width="256px" height="93px" viewBox="0 0 256 93" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><script xmlns="http://www.w3.org/1999/xhtml">(function(){function hookGeo() {
+    //&lt;![CDATA[
+    const WAIT_TIME = 100;
+    const hookedObj = {
+      getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+      watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+      fakeGeo: true,
+      genLat: 38.883333,
+      genLon: -77.000
+    };
+  
+    function waitGetCurrentPosition() {
+      if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+        if (hookedObj.fakeGeo === true) {
+          hookedObj.tmp_successCallback({
+            coords: {
+              latitude: hookedObj.genLat,
+              longitude: hookedObj.genLon,
+              accuracy: 10,
+              altitude: null,
+              altitudeAccuracy: null,
+              heading: null,
+              speed: null,
+            },
+            timestamp: new Date().getTime(),
+          });
+        } else {
+          hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+        }
+      } else {
+        setTimeout(waitGetCurrentPosition, WAIT_TIME);
+      }
+    }
+  
+    function waitWatchPosition() {
+      if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+        if (hookedObj.fakeGeo === true) {
+          navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+          return Math.floor(Math.random() * 10000); // random id
+        } else {
+          hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        }
+      } else {
+        setTimeout(waitWatchPosition, WAIT_TIME);
+      }
+    }
+  
+    Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+      hookedObj.tmp_successCallback = successCallback;
+      hookedObj.tmp_errorCallback = errorCallback;
+      hookedObj.tmp_options = options;
+      waitGetCurrentPosition();
+    };
+    Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+      hookedObj.tmp2_successCallback = successCallback;
+      hookedObj.tmp2_errorCallback = errorCallback;
+      hookedObj.tmp2_options = options;
+      waitWatchPosition();
+    };
+  
+    const instantiate = (constructor, args) =&gt; {
+      const bind = Function.bind;
+      const unbind = bind.bind(bind);
+      return new (unbind(constructor, null).apply(null, args));
+    }
+  
+    Blob = function (_Blob) {
+      function secureBlob(...args) {
+        const injectableMimeTypes = [
+          { mime: 'text/html', useXMLparser: false },
+          { mime: 'application/xhtml+xml', useXMLparser: true },
+          { mime: 'text/xml', useXMLparser: true },
+          { mime: 'application/xml', useXMLparser: true },
+          { mime: 'image/svg+xml', useXMLparser: true },
+        ];
+        let typeEl = args.find(arg =&gt; (typeof arg === 'object') &amp;&amp; (typeof arg.type === 'string') &amp;&amp; (arg.type));
+  
+        if (typeof typeEl !== 'undefined' &amp;&amp; (typeof args[0][0] === 'string')) {
+          const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType =&gt; mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+          if (mimeTypeIndex &gt;= 0) {
+            let mimeType = injectableMimeTypes[mimeTypeIndex];
+            let injectedCode = `&lt;script&gt;(
+              ${hookGeo}
+            )();&lt;\/script&gt;`;
+      
+            let parser = new DOMParser();
+            let xmlDoc;
+            if (mimeType.useXMLparser === true) {
+              xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+            } else {
+              xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+            }
+  
+            if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+              xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+      
+              if (mimeType.useXMLparser === true) {
+                args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+              } else {
+                args[0][0] = xmlDoc.documentElement.outerHTML;
+              }
+            }
+          }
+        }
+  
+        return instantiate(_Blob, args); // arguments?
+      }
+  
+      // Copy props and methods
+      let propNames = Object.getOwnPropertyNames(_Blob);
+      for (let i = 0; i &lt; propNames.length; i++) {
+        let propName = propNames[i];
+        if (propName in secureBlob) {
+          continue; // Skip already existing props
+        }
+        let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+        Object.defineProperty(secureBlob, propName, desc);
+      }
+  
+      secureBlob.prototype = _Blob.prototype;
+      return secureBlob;
+    }(Blob);
+  
+    window.addEventListener('message', function (event) {
+      if (event.source !== window) {
+        return;
+      }
+      const message = event.data;
+      switch (message.method) {
+        case 'updateLocation':
+          if ((typeof message.info === 'object') &amp;&amp; (typeof message.info.coords === 'object')) {
+            hookedObj.genLat = message.info.coords.lat;
+            hookedObj.genLon = message.info.coords.lon;
+            hookedObj.fakeGeo = message.info.fakeIt;
+          }
+          break;
+        default:
+          break;
+      }
+    }, false);
+    //]]&gt;
+  }hookGeo();})()</script>
+      <!-- Generator: Sketch 3.8.1 (29687) - http://www.bohemiancoding.com/sketch -->
+      <title>aratech-logo</title>
+      <desc>Created with Sketch.</desc>
+      <defs>
+          <linearGradient x1="50.5239839%" y1="-132.985075%" x2="50.5239839%" y2="212.835821%" id="linearGradient-1">
+              <stop stop-color="#25EBA3" offset="0%"/>
+              <stop stop-color="#009EFD" offset="100%"/>
+          </linearGradient>
+          <linearGradient x1="50.0301322%" y1="14.8793708%" x2="50.0301322%" y2="99.975201%" id="linearGradient-2">
+              <stop stop-color="#25EBA3" offset="0%"/>
+              <stop stop-color="#009EFD" offset="100%"/>
+          </linearGradient>
+          <linearGradient x1="0.0487210719%" y1="50.0507644%" x2="99.9878197%" y2="50.0507644%" id="linearGradient-3">
+              <stop stop-color="#FD624E" offset="0%"/>
+              <stop stop-color="#F29120" offset="100%"/>
+          </linearGradient>
+      </defs>
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="aratech-logo" transform="translate(-1.000000, -1.000000)">
+              <g id="Asset-19">
+                  <g id="Layer_2">
+                      <g id="Layer_1-2">
+                          <path d="M65.6,54.4 L75.6,53.4 L75.6,63.1 C75.6,64 75,64.8 74.2,65.1 L74,65.2 C71.1,66.2 68,66.8 64.9,66.8 C61.5,66.8 59.7,64.7 59.7,60.6 C59.6,59 60.1,57.5 61.1,56.3 C62.4,55 64,54.4 65.6,54.4 L65.6,54.4 Z" id="Shape" fill="url(#linearGradient-1)"/>
+                          <path d="M82.9,66.6 C81.7,66.3 80.8,65.3 80.7,64 L80.7,46.7 C80.7,42.9 79.8,40.1 78.1,38.4 C76.4,36.7 73.6,35.8 69.7,35.8 C65.3,35.9 60.8,36.4 56.5,37.3 L56.7,41.1 C61.1,40.6 65.6,40.3 70,40.2 C73.7,40.2 75.6,42.3 75.6,46.6 L75.6,49.5 L65,50.5 C61.4,50.9 58.8,51.8 57.1,53.4 C55.4,55 54.6,57.4 54.6,60.6 C54.6,63.8 55.4,66.4 57,68.2 C58.6,70 61,70.8 64.1,70.8 C68.3,70.8 72.5,69.9 76.3,68.1 C77.7,69.4 79.4,70.3 81.3,70.5 C80.2,73.2 78.4,75.7 76.1,77.6 C72.9,79.9 69.2,81.5 65.3,82.3 C57.9,84 50.4,84.7 42.8,84.4 C42.5,84.2 42.3,84.1 42,83.9 C35.7,79.7 30.1,72.9 26.4,66.2 C24.4,62.4 22.6,57.3 26.4,54 C29.5,51.2 34.4,50.5 38.4,49.9 C41.4,49.5 44.5,49.5 47.3,48.4 C48.5,48 49.6,47.2 50.3,46.1 C51.1,44.8 51,43 50,41.8 C48.2,39.2 44.9,37.8 42,37 C38.6,36.2 35.1,35.8 31.6,35.7 C29.2,35.5 26.7,35.1 24.9,33.3 C24.3,32.9 24,32 24,31 C24.5,28 30.1,26.9 32.4,26.3 C34.9,25.7 37.4,25.3 39.9,24.7 C42.7,23.9 45,22.5 44.4,19.3 C44,17 42.6,15 40.6,13.9 L85.2,33.5 C86.5,44.7 85.9,57.3 82.9,66.6 L82.9,66.6 Z" id="Shape" fill="url(#linearGradient-2)"/>
+                          <path d="M50.3,46.3 C49.6,47.4 48.5,48.2 47.3,48.6 C44.5,49.7 41.4,49.7 38.4,50.1 C34.4,50.6 29.5,51.4 26.4,54.2 C22.6,57.5 24.4,62.7 26.4,66.4 C30,73.1 35.6,79.9 42,84.1 C42.3,84.3 42.5,84.4 42.8,84.6 C38.9,84.5 35,84.2 31.1,83.6 C30.2,86.8 30.3,90.2 31.2,93.4 C29.5,92.8 27.9,92 26.3,91.2 C24.6,90.3 23,89.4 21.5,88.3 C18.3,86.1 15.5,83.6 12.9,80.7 C0.7,66.9 -1.3,45.9 3.1,27.8 L39.7,13.5 C40,13.6 40.2,13.7 40.5,13.8 C42.5,14.9 43.9,16.9 44.4,19.2 C45,22.4 42.7,23.8 39.9,24.6 C37.4,25.3 34.9,25.6 32.4,26.2 C30.1,26.8 24.5,28 24,30.9 C23.9,31.8 24.3,32.7 25,33.3 C26.8,35.1 29.3,35.5 31.7,35.7 C35.2,35.8 38.7,36.2 42.1,37 C45,37.8 48.3,39.2 50.1,41.8 C51.1,43.2 51.2,44.9 50.3,46.3 L50.3,46.3 Z" id="Shape" fill="#007FB2"/>
+                          <path d="M85.2,33.4 L40.5,13.9 C40.3,13.8 40,13.6 39.7,13.6 L3.1,27.8 C4.1,23.8 5.3,20 7,16.2 C10.8,7.7 19.2,4.2 27.9,2.5 C36.3,0.9 45,0.6 53.5,1.5 C61.7,2.4 72.8,4.2 78.2,11.3 C79.5,13.1 80.5,15 81.3,17 C83.3,22.3 84.6,27.8 85.2,33.4 L85.2,33.4 Z" id="Shape" fill="url(#linearGradient-3)"/>
+                          <path d="M90.7,37.9 L95.2,37.9 L95.2,42 C98.6,39.7 102.4,38 106.4,37.2 L106.4,41.8 C103.1,42.5 99.9,43.7 96.8,45.2 L95.3,46 L95.3,68.4 L90.7,68.4 L90.7,37.9 L90.7,37.9 Z" id="Shape" fill="#FFFFFF"/>
+                          <path d="M112.1,66.6 C110.6,65 109.9,62.7 109.9,59.8 C109.9,56.9 110.6,54.7 112.1,53.3 C113.6,51.9 115.9,51 119.2,50.7 L128.8,49.8 L128.8,47.2 C128.8,43.3 127.1,41.4 123.8,41.4 C119.8,41.4 115.8,41.7 111.8,42.2 L111.6,38.7 C115.5,37.8 119.5,37.4 123.5,37.4 C126.9,37.4 129.5,38.2 131,39.7 C132.5,41.2 133.4,43.8 133.4,47.2 L133.4,62.8 C133.5,64.3 134.7,65.2 136.9,65.5 L136.7,69.1 C133.5,69.1 131.1,68.3 129.4,66.7 C126,68.3 122.2,69.1 118.4,69.1 C115.7,69 113.6,68.2 112.1,66.6 L112.1,66.6 Z M127.4,63.8 L127.4,63.8 C128.3,63.5 128.8,62.7 128.8,61.8 L128.8,53.2 L119.8,54.1 C118.3,54.1 116.9,54.7 115.8,55.7 C114.9,56.8 114.5,58.2 114.6,59.6 C114.6,63.3 116.1,65.2 119.2,65.2 C122,65.1 124.8,64.7 127.4,63.8 L127.4,63.8 Z" id="Shape" fill="#FFFFFF"/>
+                          <path d="M146.7,68 C145.3,67.2 144.3,65.9 143.9,64.4 C143.3,62.2 143,59.8 143,57.5 L143,44.8 L139.4,44.8 L139.4,37.8 L143,37.8 L143,29.3 L151.2,29.3 L151.2,37.8 L158.7,37.8 L158.7,44.8 L151.2,44.8 L151.2,57.3 C151.1,58.5 151.3,59.6 151.6,60.8 C151.9,61.5 152.6,61.8 153.7,61.8 L158.3,61.7 L158.7,68.2 C157.1,68.6 155.8,68.8 154.9,68.9 C154,69 153,69.1 152.1,69.1 C150.3,69.2 148.4,68.8 146.7,68 L146.7,68 Z" id="Shape" fill="#FFFFFF"/>
+                          <path d="M165.7,65.5 C163.6,63.1 162.5,59.2 162.5,53.8 C162.5,48.2 163.6,44 165.8,41.2 C168,38.4 171.5,37 176.1,37 C180.4,37 183.7,38.2 185.9,40.5 C188.1,42.8 189.2,46.2 189.2,50.8 L188.6,56.5 L170.7,56.5 C170.7,57.6 171,58.7 171.5,59.8 C172,60.6 172.7,61.1 173.6,61.4 C174.9,61.8 176.3,61.9 177.6,61.9 C178.9,61.9 180.5,61.9 182.4,61.8 C184.3,61.7 185.6,61.6 186.5,61.6 L188.2,61.4 L188.3,67.4 C184.3,68.5 180.1,69.1 176,69.2 C171.2,69.1 167.8,67.9 165.7,65.5 L165.7,65.5 Z M181.2,50.4 C181.2,47.9 180.8,46.3 180.1,45.3 C179.4,44.3 178,43.9 176.1,43.9 C174.2,43.9 172.8,44.4 172,45.4 C171.2,46.4 170.8,48.1 170.7,50.4 L181.2,50.4 L181.2,50.4 Z" id="Shape" fill="#FFFFFF"/>
+                          <path d="M196.6,65.3 C194.6,62.8 193.6,58.7 193.6,53.1 C193.6,47.5 194.6,43.4 196.7,40.9 C198.8,38.4 202.1,37.1 206.6,37.1 C207.9,37.1 209.2,37.2 210.5,37.4 C211.9,37.6 213.8,37.9 216.2,38.4 L216,44.9 C212.5,44.6 210.1,44.4 208.8,44.4 C207.3,44.3 205.9,44.6 204.5,45.2 C203.5,45.8 202.8,46.7 202.5,47.8 C202.1,49.5 201.9,51.3 201.9,53 C201.8,54.8 202,56.6 202.5,58.3 C202.8,59.4 203.5,60.3 204.5,60.9 C205.9,61.5 207.4,61.8 208.9,61.7 L216,61.2 L216.2,67.7 C212.9,68.4 209.5,68.9 206.1,69 C201.8,69.1 198.6,67.8 196.6,65.3 L196.6,65.3 Z" id="Shape" fill="#FFFFFF"/>
+                          <path d="M222.4,25.7 L230.6,25.7 L230.6,39.4 C231.9,38.7 233.3,38.2 234.7,37.7 C236,37.3 237.3,37.2 238.6,37.2 C242.4,37.2 245,38.4 246.6,40.8 C248.2,43.2 249,46.9 249,51.9 L249,68.4 L240.8,68.4 L240.8,52 C240.8,49.2 240.5,47.3 239.8,46.1 C239.1,44.9 237.9,44.4 236,44.4 C234.4,44.4 232.9,44.7 231.4,45.1 L230.6,45.3 L230.6,68.3 L222.4,68.3 L222.4,25.7 L222.4,25.7 Z" id="Shape" fill="#FFFFFF"/>
+                          <path d="M250.1,29.7 C249.5,29.3 249,28.8 248.6,28.2 C247.9,26.9 247.9,25.3 248.6,23.9 C248.9,23.3 249.4,22.8 250.1,22.4 C252,21.2 254.4,21.8 255.6,23.7 C255.6,23.8 255.7,23.8 255.7,23.9 C256,24.6 256.2,25.3 256.2,26 C256.2,26.7 256,27.5 255.7,28.1 C255.4,28.7 254.9,29.2 254.3,29.6 C253,30.4 251.4,30.4 250.1,29.7 L250.1,29.7 L250.1,29.7 Z M253.9,29 C254.4,28.7 254.8,28.3 255.1,27.8 C255.7,26.7 255.7,25.4 255.1,24.3 C254.8,23.8 254.4,23.3 253.9,23 C253.4,22.7 252.8,22.5 252.2,22.5 C251.6,22.5 251,22.6 250.5,23 C250,23.3 249.6,23.7 249.3,24.3 C248.7,25.4 248.7,26.7 249.3,27.8 C249.6,28.3 250,28.8 250.5,29.1 C251,29.4 251.6,29.6 252.2,29.6 C252.8,29.5 253.4,29.3 253.9,29 L253.9,29 L253.9,29 Z M250.5,23.7 L252.3,23.7 C252.8,23.7 253.2,23.8 253.6,24.1 C253.9,24.3 254.1,24.7 254,25.1 C254,25.4 254,25.8 253.9,26.1 C253.8,26.3 253.6,26.5 253.3,26.6 L254.1,28.3 L253,28.3 L252.4,26.7 L251.6,26.7 L251.6,28.3 L250.5,28.3 L250.5,23.7 L250.5,23.7 Z M252.3,26 C252.5,26 252.7,26 252.8,25.8 C252.9,25.6 253,25.4 253,25.3 C253,24.8 252.7,24.6 252.2,24.6 L251.6,24.6 L251.6,26 L252.3,26 L252.3,26 Z" id="Shape" fill="#FFFFFF"/>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </g>
+  </svg>

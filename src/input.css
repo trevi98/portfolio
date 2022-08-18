@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .project-odd{
+    @apply flex-col translate-x-[-75%];
+  }
+  .project-even{
+    @apply flex-col-reverse translate-x-[75%];
+  }
+  .project {
+    @apply opacity-0 lg:opacity-[1] lg:translate-x-0 lg:right-auto relative flex lg:flex-row lg:gap-[20px] gap-[30px]  justify-center items-center border-[20px] border-[#18435F] border-solid bg-[#18435F] lg:border-none lg:bg-c-main-color;
+  }
+  .project-img-container{
+    @apply lg:w-[calc(60%-60px)] w-[90%] h-[100%] relative lg:left-[-100%] rounded-sm;
+  }
+  .project-img-container-even{
+    @apply lg:w-[calc(60%-60px)] w-[90%] h-[100%] relative lg:right-[-100%] rounded-sm;
+  }
+  .img-filter{
+    @apply absolute z-[2] bg-[#2cdaef] opacity-[0.5] h-full w-full group-hover:opacity-0 transition-opacity duration-[0.4s] rounded-sm;
+  }
+  .project-img{
+    @apply w-[100%] rounded-sm;
+  }
+  .project-info{
+    @apply flex flex-col justify-between content-center lg:w-[50%] w-[100%] relative lg:right-[-100%] px-[20px] lg:px-0 gap-[20px] lg:gap-0;
+  }
+  .project-info-even{
+    @apply flex flex-col  justify-between content-center lg:w-[50%] w-[100%] relative lg:left-[-100%] px-[20px] lg:px-0 gap-[20px] lg:gap-0;
+  }
+  .project-title{
+    @apply lg:text-right text-center text-3xl;
+  }
+  .project-title-even{
+    @apply lg:text-left text-center text-3xl;
+  }
+  .project-description{
+    @apply lg:shadow-xx bg-[#18435F] lg:h-[100px] flex justify-center items-center lg:text-right text-center px-[10px] lg:py-[60px] relative  z-[3] rounded-sm leading-[1.6];
+  }
+  .project-description-even{
+    @apply lg:shadow-xx bg-[#18435F] lg:h-[100px] flex justify-center items-center lg:text-left text-center px-[10px] lg:py-[60px] relative  z-[3] rounded-sm leading-[1.6];
+  }
+  .project-stack{
+    @apply lg:text-right text-center relative z-[3];
+  }
+  .project-stack-even{
+    @apply lg:text-left text-center relative z-[3];
+  }
+  .project-link{
+    @apply lg:text-right text-center;
+  }
+  .project-link-even{
+    @apply lg:text-left text-center;
+  }
+
+
+  
+}
+:root {
+  --c-main-color: #002B47;
+  --c-main-text-color: #fdfbf9;
+  --c-main-text-color-shadwo: #fdfbf9bf;
+  --c-main-headers-color: #2cdaef;
+  --c-headers-color: #1b88da;
+  --c-call-to-action-color: #5f50df;
+}
+/* w-full h-[300px] grid grid-cols-12 rows-3 items-center */
