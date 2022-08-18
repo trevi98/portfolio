@@ -7,6 +7,7 @@
 //         document.documentElement.style.setProperty('--xx','#f00');
 //     }
 // });
+history.replaceState('data to be passed', 'Title of the page', '/');
 
 let canvasSize = 500;
 let changed = false;
