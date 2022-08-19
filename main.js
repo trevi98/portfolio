@@ -8,6 +8,12 @@
 //     }
 // });
 // history.replaceState('data to be passed', 'Title of the page', '/');
+const nextURL = 'https://my-website.com/page_b';
+const nextTitle = 'My new page title';
+const nextState = { additionalInformation: 'Updated the URL with JS' };
+// window.history.pushState(nextState, nextTitle, nextURL);
+// window.history.pushState(nextState,nextTitle,nextURL);
+window.history.pushState("object or string", "Title", "/");
 
 let canvasSize = 500;
 let changed = false;
@@ -85,6 +91,20 @@ $(window).on("resize", function(){
 
 /////////////////////// menu ////////////////////////////////
 
+function functiondisable() {
+    // To get the scroll position of current webpage
+    TopScroll = window.pageYOffset || document.documentElement.scrollTop;
+    LeftScroll = window.pageXOffset || document.documentElement.scrollLeft,
+    
+    // if scroll happens, set it to the previous value
+    window.onscroll = function() {
+    window.scrollTo(LeftScroll, TopScroll);
+            };
+    }
+    
+    function functionenable() {
+    window.onscroll = function() {};
+    }
 let menu_opened = false;
 
 function close_menu(){
@@ -97,10 +117,12 @@ function close_menu(){
     document.querySelector("#menu").classList.remove("animate-menu_open");
     document.querySelector("#menu").classList.add("animate-menu_close");
     menu_opened = false;
+    functionenable()
 
 }
 document.querySelector("#menu_button").addEventListener('click',(event)=>{
     // console.log(event.target.childNodes)
+    functiondisable();
     if(!menu_opened){
         document.querySelector(".menu_top").classList.remove('animate-menu_button_top_reverse');
         document.querySelector(".menu_middle").classList.remove('animate-menu_button_middle_reverse');
