@@ -1,13 +1,9 @@
+
 {
-  "scripts": {
-    "test": "some test command",
-    "start": "node app.js",
-    "bundle": "browserify file.js -o bundle.js"
- },
-  "devDependencies": {
+    "devDependencies": {
     "tailwindcss": "^3.1.8"
-  },
-  "dependencies": {
+    },
+    "dependencies": {
     "TagCloud": "^2.2.0"
-  }
+    }
 }

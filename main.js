@@ -8,12 +8,12 @@
 //     }
 // });
 // history.replaceState('data to be passed', 'Title of the page', '/');
-const nextURL = 'https://my-website.com/page_b';
-const nextTitle = 'My new page title';
-const nextState = { additionalInformation: 'Updated the URL with JS' };
-// window.history.pushState(nextState, nextTitle, nextURL);
-// window.history.pushState(nextState,nextTitle,nextURL);
-window.history.pushState("object or string", "Title", "/");
+// const nextURL = 'https://my-website.com/page_b';
+// const nextTitle = 'My new page title';
+// const nextState = { additionalInformation: 'Updated the URL with JS' };
+// // window.history.pushState(nextState, nextTitle, nextURL);
+// // window.history.pushState(nextState,nextTitle,nextURL);
+// window.history.pushState("object or string", "Title", "/");
 
 let canvasSize = 500;
 let changed = false;
