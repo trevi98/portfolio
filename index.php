@@ -23,7 +23,7 @@
 
 <body class="bg-c-main-color text-c-main-text-color font-['Comfortaa'] leading-[1.6] relative overflow-x-hidden w-full">
     <!-- starting animation -->
-        <div class="absolute top-0 left-0 w-full h-[100vh] z-[7] bg-[#18435F] flex flex-col items-center justify-center gap-[20px] animate-start_window overflow-hidden origin-center">
+        <div class="fixed top-0 left-0 w-full h-[100vh] z-[7] bg-[#18435F] flex flex-col items-center justify-center gap-[20px] animate-start_window overflow-hidden origin-center">
             <!-- <div> -->
                 <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 54.187 47.879" class="w-[10%] min-w-[100px] opacity-0 animate-start_logo">
                     <g id="Group_4" data-name="Group 4" transform="translate(-714.976 -613.034)">
