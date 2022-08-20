@@ -10,25 +10,25 @@
     @apply flex-col-reverse translate-x-[75%];
   }
   .project {
-    @apply opacity-0 lg:opacity-[1] lg:translate-x-0 lg:right-auto relative flex lg:flex-row lg:gap-[20px] gap-[30px]  justify-center items-center border-[20px] border-[#18435F] border-solid bg-[#18435F] lg:border-none lg:bg-c-main-color;
+    @apply opacity-0 lg:opacity-[1] md:max-w-[700px] md:mx-auto lg:max-w-none lg:translate-x-0 lg:right-auto relative flex lg:flex-row lg:gap-[20px] gap-[50px]  justify-center items-center bg-[#18435F] lg:border-none lg:bg-c-main-color;
   }
   .project-img-container{
-    @apply lg:w-[calc(60%-60px)] w-[90%] h-[100%] relative lg:left-[-100%] rounded-sm;
+    @apply lg:w-[calc(60%-60px)] w-[100%] h-[100%] relative lg:left-[-100%] rounded-sm;
   }
   .project-img-container-even{
-    @apply lg:w-[calc(60%-60px)] w-[90%] h-[100%] relative lg:right-[-100%] rounded-sm;
+    @apply lg:w-[calc(60%-60px)] w-[100%] h-[100%] relative lg:right-[-100%] rounded-sm;
   }
   .img-filter{
-    @apply absolute z-[2] bg-[#2cdaef] opacity-[0.5] h-full w-full group-hover:opacity-0 transition-opacity duration-[0.4s] rounded-sm;
+    @apply absolute z-[2] bg-[#2cdaef] opacity-[0] lg:opacity-[0.3] h-full w-full group-hover:opacity-0 transition-opacity duration-[0.4s] rounded-sm;
   }
   .project-img{
     @apply w-[100%] rounded-sm;
   }
   .project-info{
-    @apply flex flex-col justify-between content-center lg:w-[50%] w-[100%] relative lg:right-[-100%] px-[20px] lg:px-0 gap-[20px] lg:gap-0;
+    @apply flex flex-col justify-between content-center lg:w-[50%] w-[100%] relative lg:right-[-100%] px-[20px] lg:px-0 gap-[20px] lg:gap-[20px] pb-[10px] lg:pb-0;
   }
   .project-info-even{
-    @apply flex flex-col  justify-between content-center lg:w-[50%] w-[100%] relative lg:left-[-100%] px-[20px] lg:px-0 gap-[20px] lg:gap-0;
+    @apply flex flex-col  justify-between content-center lg:w-[50%] w-[100%] relative lg:left-[-100%] px-[20px] lg:px-0 gap-[20px] lg:gap-[20px] pb-[10px] lg:pb-0;
   }
   .project-title{
     @apply lg:text-right text-center text-3xl;
@@ -49,10 +49,10 @@
     @apply lg:text-left text-center relative z-[3];
   }
   .project-link{
-    @apply lg:text-right text-center;
+    @apply lg:text-right text-center self-center lg:self-end flex gap-[10px] items-center;
   }
   .project-link-even{
-    @apply lg:text-left text-center;
+    @apply lg:text-left text-center self-center lg:self-start flex gap-[10px] items-center;
   }
 
 
