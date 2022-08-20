@@ -208,7 +208,7 @@
                         About Me
                     </div>
                     <div class="mt-[20px]">
-                        Hello! My name is Abdullatef and I enjoy creating things that live on the internet. My interest in web development started back in 2016 when I decided to build a static blog site for a collage assignment which taught me a lot about HTML & CSS, and made me really curious about how to create content dynamically and how to make the site interactive, and from there my journey in PHP & JavaScript started, and I've been coding for the web since. I worked both as a freelancer and as an employee, and I loved every second of both worlds.
+                        Hello! My name is Abdullatef and I enjoy creating things that live on the internet. My interest in web development started back in 2016 when I decided to build a blog site for a collage assignment which taught me a lot about HTML & CSS, and made me really curious about how to create content dynamically and how to make the site interactive, and from there my journey in PHP & JavaScript started, and I've been coding for the web since. I worked both as a freelancer and as an employee, and I loved every second of both worlds.
                     </div>
                 </div>
                 <div class=" sm:w-[100%] csm:w-[50%] mx-auto">
@@ -249,7 +249,7 @@
                     <!-- project odd -->
                     <div class="project project-odd">
                         <div class="project-img-container group animation-left">
-                            <a href="https://google.com">
+                            <a href="https://stonestox.com" target="_blank">
     
                                 <div class="img-filter"></div>
                             </a>
@@ -289,7 +289,7 @@
                             </a>
                         </div>
                         <div class="project-img-container-even group animation-right">
-                            <a href="https://google.com">
+                            <a href="https://theweddinghack.com" target="_blank">
     
                                 <div class="img-filter"></div>
                             </a>
@@ -300,7 +300,7 @@
                     <!-- project odd -->
                     <div class="project project-odd">
                         <div class="project-img-container group animation-left">
-                            <a href="https://google.com">
+                            <a href="https://midar.net" target="_blank">
     
                                 <div class="img-filter"></div>
                             </a>
