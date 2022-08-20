@@ -150,7 +150,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" target="_blank" class=" group block p-[10px] border-solid border-[1px] border-c-call-to-action-color transition-all duration-[0.4s] relative z-[0]">
+                        <a href="/assets/Resume.pdf" target="_blank" class=" group block p-[10px] border-solid border-[1px] border-c-call-to-action-color transition-all duration-[0.4s] relative z-[0]">
                             <span>
                                 Resume
                             </span>
