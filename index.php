@@ -230,6 +230,7 @@
                           <li><a class="stop">GIT</a></li>
                           <li><a class="stop">npm</a></li>
                           <li><a class="stop">SQL</a></li>
+                          <li><a class="stop">Livewire</a></li>
                          </ul>
                         </canvas>
                        </div>
@@ -390,15 +391,15 @@
 
 
 <script type="text/javascript">
-    window.onload = function() {
-      try {
-        TagCanvas.Start('myCanvas');
-        // $('#myCanvas').tagcanvas(options, tagListId);
-      } catch(e) {
-        // something went wrong, hide the canvas container
-        document.getElementById('myCanvasContainer').style.display = 'none';
-      }
-    };
+    // window.onload = function() {
+    //   try {
+    //     TagCanvas.Start('myCanvas');
+    //     // $('#myCanvas').tagcanvas(options, tagListId);
+    //   } catch(e) {
+    //     // something went wrong, hide the canvas container
+    //     document.getElementById('myCanvasContainer').style.display = 'none';
+    //   }
+    // };
   </script>
 
 <script src="main.js"></script>
