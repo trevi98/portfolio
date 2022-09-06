@@ -224,6 +224,7 @@
                           <li><a class="stop">PHP</a></li>
                           <li><a class="stop">Laravel</a></li>
                           <li><a class="stop">AlpineJS</a></li>
+                          <li><a class="stop">ReactJs</a></li>
                           <li><a class="stop">JQuery</a></li>
                           <li><a class="stop">Json</a></li>
                           <li><a class="stop">REST</a></li>
